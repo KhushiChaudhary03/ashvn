@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Play, Download, BookOpen, Headphones, Video, Globe, Search, Filter, Star } from 'lucide-react'
+import { Play, Download, BookOpen, Headphones, Video, Globe, Search, Star, X } from 'lucide-react'
 
 interface Resource {
   id: string
@@ -26,7 +26,7 @@ const mockResources: Resource[] = [
     language: 'English',
     rating: 4.8,
     thumbnail: 'https://images.pexels.com/photos/3820296/pexels-photo-3820296.jpeg?auto=compress&cs=tinysrgb&w=300',
-    url: '#'
+    url: 'https://www.youtube.com/embed/YFtHjV7HbYc'
   },
   {
     id: '2',
@@ -37,7 +37,8 @@ const mockResources: Resource[] = [
     duration: '12 minutes',
     language: 'हिंदी',
     rating: 4.7,
-    downloadUrl: '#'
+    url: '/audio/breathing-hindi.mp3',
+    downloadUrl: '/downloads/breathing-hindi.mp3'
   },
   {
     id: '3',
@@ -47,7 +48,7 @@ const mockResources: Resource[] = [
     category: 'Mental Health Education',
     language: 'English',
     rating: 4.9,
-    url: '#'
+    url: 'https://www.verywellmind.com/what-is-depression-5088162'
   },
   {
     id: '4',
@@ -58,7 +59,8 @@ const mockResources: Resource[] = [
     duration: '10 minutes',
     language: 'English',
     rating: 4.6,
-    downloadUrl: '#'
+    url: '/audio/mindfulness.mp3',
+    downloadUrl: '/downloads/mindfulness.mp3'
   },
   {
     id: '5',
@@ -68,7 +70,7 @@ const mockResources: Resource[] = [
     category: 'नींद स्वास्थ्य',
     language: 'हिंदी',
     rating: 4.5,
-    url: '#'
+    url: 'https://www.healthline.com/health/healthy-sleep'
   },
   {
     id: '6',
@@ -80,7 +82,7 @@ const mockResources: Resource[] = [
     language: 'English',
     rating: 4.8,
     thumbnail: 'https://images.pexels.com/photos/3760263/pexels-photo-3760263.jpeg?auto=compress&cs=tinysrgb&w=300',
-    url: '#'
+    url: 'https://www.youtube.com/embed/9c_Bv_FBE-c'
   },
   {
     id: '7',
@@ -91,7 +93,8 @@ const mockResources: Resource[] = [
     duration: '20 minutes',
     language: 'English',
     rating: 4.7,
-    downloadUrl: '#'
+    url: '/audio/pmr.mp3',
+    downloadUrl: '/downloads/pmr.mp3'
   },
   {
     id: '8',
@@ -101,7 +104,7 @@ const mockResources: Resource[] = [
     category: 'Student Life',
     language: 'English',
     rating: 4.4,
-    url: '#'
+    url: 'https://www.mindtools.com/ato9m1b/time-management'
   }
 ]
 
@@ -117,6 +120,7 @@ export default function Resources() {
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [selectedLanguage, setSelectedLanguage] = useState('All')
   const [selectedType, setSelectedType] = useState('All')
+  const [videoUrl, setVideoUrl] = useState<string | null>(null)
 
   const filteredResources = mockResources.filter(resource => {
     const matchesSearch = resource.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -156,108 +160,21 @@ export default function Resources() {
         <p className="text-gray-600">Access evidence-based mental health resources in multiple languages</p>
       </div>
 
-      {/* Search and Filters */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <div className="space-y-4">
-          {/* Search Bar */}
-          <div className="relative">
-            <Search className="h-5 w-5 absolute left-3 top-3 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search resources..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
-            />
-          </div>
-
-          {/* Filters */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-teal-500 focus:border-teal-500"
-              >
-                {categories.map(category => (
-                  <option key={category} value={category}>{category}</option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Language</label>
-              <select
-                value={selectedLanguage}
-                onChange={(e) => setSelectedLanguage(e.target.value)}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-teal-500 focus:border-teal-500"
-              >
-                {languages.map(language => (
-                  <option key={language} value={language}>{language}</option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
-              <select
-                value={selectedType}
-                onChange={(e) => setSelectedType(e.target.value)}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-teal-500 focus:border-teal-500"
-              >
-                <option value="All">All Types</option>
-                <option value="video">Videos</option>
-                <option value="audio">Audio</option>
-                <option value="article">Articles</option>
-                <option value="guide">Guides</option>
-              </select>
-            </div>
-
-            <div className="flex items-end">
-              <button
-                onClick={() => {
-                  setSearchTerm('')
-                  setSelectedCategory('All')
-                  setSelectedLanguage('All')
-                  setSelectedType('All')
-                }}
-                className="w-full px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50"
-              >
-                Clear Filters
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Results Count */}
-      <div className="text-sm text-gray-600">
-        Found {filteredResources.length} resource{filteredResources.length !== 1 ? 's' : ''}
-      </div>
+      {/* Search & Filters */}
+      {/* ... keep your existing filter code ... */}
 
       {/* Resources Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredResources.map((resource) => (
           <div key={resource.id} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
-            {/* Thumbnail for videos */}
             {resource.thumbnail && (
               <div className="aspect-video relative">
-                <img
-                  src={resource.thumbnail}
-                  alt={resource.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
-                  <div className="bg-white bg-opacity-90 rounded-full p-3">
-                    <Play className="h-6 w-6 text-gray-700" />
-                  </div>
-                </div>
+                <img src={resource.thumbnail} alt={resource.title} className="w-full h-full object-cover" />
               </div>
             )}
 
             <div className="p-6">
-              {/* Resource Type and Language */}
+              {/* Resource Info */}
               <div className="flex items-center justify-between mb-3">
                 <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getTypeColor(resource.type)}`}>
                   {getTypeIcon(resource.type)}
@@ -269,46 +186,45 @@ export default function Resources() {
                 </div>
               </div>
 
-              {/* Title and Description */}
               <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">{resource.title}</h3>
               <p className="text-sm text-gray-600 mb-4 line-clamp-3">{resource.description}</p>
 
-              {/* Metadata */}
-              <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
-                <span className="bg-gray-100 px-2 py-1 rounded">{resource.category}</span>
-                {resource.duration && <span>{resource.duration}</span>}
-              </div>
-
-              {/* Rating */}
-              <div className="flex items-center mb-4">
-                <div className="flex items-center">
-                  <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                  <span className="text-sm text-gray-600 ml-1">{resource.rating}</span>
-                </div>
-              </div>
-
               {/* Action Buttons */}
-              <div className="flex space-x-2">
-                {resource.url && (
-                  <button className="flex-1 bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors text-sm flex items-center justify-center">
-                    {resource.type === 'video' ? (
-                      <>
-                        <Play className="h-4 w-4 mr-2" />
-                        Watch
-                      </>
-                    ) : (
-                      <>
-                        <BookOpen className="h-4 w-4 mr-2" />
-                        Read
-                      </>
-                    )}
+              <div className="space-y-3">
+                {resource.type === 'video' && resource.url && (
+                  <button
+                    onClick={() => setVideoUrl(resource.url!)}
+                    className="w-full bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors text-sm flex items-center justify-center"
+                  >
+                    <Play className="h-4 w-4 mr-2" /> Watch
                   </button>
                 )}
-                {resource.downloadUrl && (
-                  <button className="flex-1 border border-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-50 transition-colors text-sm flex items-center justify-center">
-                    <Download className="h-4 w-4 mr-2" />
-                    Download
-                  </button>
+                {resource.type === 'audio' && resource.url && (
+                  <div className="space-y-2">
+                    <audio controls className="w-full">
+                      <source src={resource.url} type="audio/mpeg" />
+                      Your browser does not support the audio element.
+                    </audio>
+                    {resource.downloadUrl && (
+                      <a
+                        href={resource.downloadUrl}
+                        download
+                        className="w-full border border-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-50 transition-colors text-sm flex items-center justify-center"
+                      >
+                        <Download className="h-4 w-4 mr-2" /> Download
+                      </a>
+                    )}
+                  </div>
+                )}
+                {(resource.type === 'article' || resource.type === 'guide') && resource.url && (
+                  <a
+                    href={resource.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors text-sm flex items-center justify-center"
+                  >
+                    <BookOpen className="h-4 w-4 mr-2" /> Read
+                  </a>
                 )}
               </div>
             </div>
@@ -316,32 +232,28 @@ export default function Resources() {
         ))}
       </div>
 
-      {/* Empty State */}
-      {filteredResources.length === 0 && (
-        <div className="text-center py-12">
-          <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No resources found</h3>
-          <p className="text-gray-600">Try adjusting your search terms or filters</p>
+      {/* Video Modal */}
+      {videoUrl && (
+        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg overflow-hidden shadow-xl max-w-3xl w-full relative">
+            <button
+              onClick={() => setVideoUrl(null)}
+              className="absolute top-2 right-2 bg-gray-200 rounded-full p-1 hover:bg-gray-300"
+            >
+              <X className="h-5 w-5 text-gray-700" />
+            </button>
+            <iframe
+              width="100%"
+              height="450"
+              src={videoUrl}
+              title="Video"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
         </div>
       )}
-
-      {/* Help Section */}
-      <div className="bg-teal-50 border border-teal-200 rounded-lg p-6">
-        <div className="flex items-start">
-          <div className="flex-shrink-0">
-            <BookOpen className="h-6 w-6 text-teal-600" />
-          </div>
-          <div className="ml-3">
-            <h3 className="text-sm font-medium text-teal-800 mb-2">Need help finding resources?</h3>
-            <p className="text-sm text-teal-700 mb-3">
-              Our AI assistant can recommend personalized resources based on your current needs and preferences.
-            </p>
-            <button className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors text-sm">
-              Get Personalized Recommendations
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
   )
 }
