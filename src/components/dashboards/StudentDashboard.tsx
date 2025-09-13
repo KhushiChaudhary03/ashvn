@@ -7,6 +7,7 @@ import {
   Heart, 
   AlertCircle, 
   TrendingUp,
+  Activity,
   Brain,
   Phone
 } from 'lucide-react'
@@ -45,6 +46,13 @@ export default function StudentDashboard() {
       icon: Heart,
       href: '/forum',
       color: 'bg-pink-500',
+    },
+    {
+      name: 'Mood Tracker',
+      description: 'Track your daily mood and activities',
+      icon: Activity,
+      href: '/mood',
+      color: 'bg-green-500',
     },
   ]
 

@@ -10,6 +10,9 @@ import Forum from './Forum'
 import Profile from './Profile'
 import Analytics from './Analytics'
 import Settings from './Settings'
+import MoodTracker from './MoodTracker'
+import CrisisSupport from './CrisisSupport'
+import MLInsights from './MLInsights'
 
 export default function Router() {
   const { profile } = useAuth()
@@ -33,6 +36,8 @@ export default function Router() {
               <Route path="/resources" element={<Resources />} />
               <Route path="/forum" element={<Forum />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/mood" element={<MoodTracker />} />
+              <Route path="/crisis" element={<CrisisSupport />} />
             </>
           )}
 
@@ -40,7 +45,7 @@ export default function Router() {
           {profile?.role === 'counsellor' && (
             <>
               <Route path="/appointments" element={<Appointments />} />
-              <Route path="/students" element={<div>Students Management</div>} />
+              <Route path="/students" element={<div className="p-6"><h1 className="text-2xl font-bold">Students Management</h1><p className="text-gray-600">Manage your assigned students and their progress.</p></div>} />
               <Route path="/resources" element={<Resources />} />
               <Route path="/profile" element={<Profile />} />
             </>
@@ -50,9 +55,10 @@ export default function Router() {
           {profile?.role === 'admin' && (
             <>
               <Route path="/analytics" element={<Analytics />} />
-              <Route path="/users" element={<div>User Management</div>} />
+              <Route path="/users" element={<div className="p-6"><h1 className="text-2xl font-bold">User Management</h1><p className="text-gray-600">Manage platform users and permissions.</p></div>} />
               <Route path="/resources" element={<Resources />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="/ml-insights" element={<MLInsights />} />
             </>
           )}
 

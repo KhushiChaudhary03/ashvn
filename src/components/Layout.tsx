@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { 
   Menu, 
@@ -7,7 +8,10 @@ import {
   MessageCircle, 
   Calendar, 
   BookOpen, 
-  BarChart3, 
+  BarChart3,
+  Activity,
+  AlertTriangle,
+  Brain,
   Settings,
   LogOut,
   User
@@ -20,6 +24,7 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   const { profile, signOut } = useAuth()
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const location = useLocation()
 
   const getNavItems = () => {
     const baseItems = [
@@ -31,8 +36,10 @@ export default function Layout({ children }: LayoutProps) {
         ...baseItems,
         { name: 'AI Assistant', href: '/chat', icon: MessageCircle },
         { name: 'Appointments', href: '/appointments', icon: Calendar },
+        { name: 'Mood Tracker', href: '/mood', icon: Activity },
         { name: 'Resources', href: '/resources', icon: BookOpen },
         { name: 'Peer Support', href: '/forum', icon: Heart },
+        { name: 'Crisis Support', href: '/crisis', icon: AlertTriangle },
         { name: 'Profile', href: '/profile', icon: User },
       ]
     } else if (profile?.role === 'counsellor') {
@@ -47,6 +54,7 @@ export default function Layout({ children }: LayoutProps) {
       return [
         ...baseItems,
         { name: 'Analytics', href: '/analytics', icon: BarChart3 },
+        { name: 'ML Insights', href: '/ml-insights', icon: Brain },
         { name: 'Users', href: '/users', icon: User },
         { name: 'Resources', href: '/resources', icon: BookOpen },
         { name: 'Settings', href: '/settings', icon: Settings },
@@ -87,14 +95,18 @@ export default function Layout({ children }: LayoutProps) {
             <div className="p-4">
               <div className="space-y-2">
                 {navItems.map((item) => (
-                  <a
+                  <Link
                     key={item.name}
-                    href={item.href}
-                    className="flex items-center px-3 py-2 rounded-md text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors"
+                    to={item.href}
+                    className={`flex items-center px-3 py-2 rounded-md transition-colors ${
+                      location.pathname === item.href
+                        ? 'bg-teal-50 text-teal-600 font-medium'
+                        : 'text-gray-700 hover:bg-teal-50 hover:text-teal-600'
+                    }`}
                   >
                     <item.icon className="h-5 w-5 mr-3" />
                     {item.name}
-                  </a>
+                  </Link>
                 ))}
               </div>
               <div className="mt-8 pt-8 border-t">
@@ -120,14 +132,18 @@ export default function Layout({ children }: LayoutProps) {
         <div className="flex-1 p-4">
           <div className="space-y-2">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.name}
-                href={item.href}
-                className="flex items-center px-3 py-2 rounded-md text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors"
+                to={item.href}
+                className={`flex items-center px-3 py-2 rounded-md transition-colors ${
+                  location.pathname === item.href
+                    ? 'bg-teal-50 text-teal-600 font-medium'
+                    : 'text-gray-700 hover:bg-teal-50 hover:text-teal-600'
+                }`}
               >
                 <item.icon className="h-5 w-5 mr-3" />
                 {item.name}
-              </a>
+              </Link>
             ))}
           </div>
         </div>
