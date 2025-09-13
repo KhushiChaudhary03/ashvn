@@ -1,85 +1,69 @@
-import React, { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import { useAuth } from '../contexts/AuthContext'
-import { 
-  Menu, 
-  X, 
-  Heart, 
-  MessageCircle, 
-  Calendar, 
-  BookOpen, 
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import {
+  Menu,
+  X,
+  Heart,
+  MessageCircle,
+  Calendar,
+  BookOpen,
   BarChart3,
   Activity,
   AlertTriangle,
   Brain,
   Settings,
   LogOut,
-  User
-} from 'lucide-react'
+  User,
+} from "lucide-react";
 
 interface LayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export default function Layout({ children }: LayoutProps) {
-  const { profile, signOut } = useAuth()
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const location = useLocation()
+  const { profile, signOut } = useAuth();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const location = useLocation();
 
   const getNavItems = () => {
-    const baseItems = [
-      { name: 'Dashboard', href: '/', icon: BarChart3 },
-    ]
-
-    if (profile?.role === 'student') {
-      return [
-        ...baseItems,
-        { name: 'AI Assistant', href: '/chat', icon: MessageCircle },
-        { name: 'Appointments', href: '/appointments', icon: Calendar },
-        { name: 'Mood Tracker', href: '/mood', icon: Activity },
-        { name: 'Resources', href: '/resources', icon: BookOpen },
-        { name: 'Peer Support', href: '/forum', icon: Heart },
-        { name: 'Crisis Support', href: '/crisis', icon: AlertTriangle },
-        { name: 'Profile', href: '/profile', icon: User },
-      ]
-    } else if (profile?.role === 'counsellor') {
-      return [
-        ...baseItems,
-        { name: 'Appointments', href: '/appointments', icon: Calendar },
-        { name: 'Students', href: '/students', icon: User },
-        { name: 'Resources', href: '/resources', icon: BookOpen },
-        { name: 'Profile', href: '/profile', icon: User },
-      ]
-    } else if (profile?.role === 'admin') {
-      return [
-        ...baseItems,
-        { name: 'Analytics', href: '/analytics', icon: BarChart3 },
-        { name: 'ML Insights', href: '/ml-insights', icon: Brain },
-        { name: 'Users', href: '/users', icon: User },
-        { name: 'Resources', href: '/resources', icon: BookOpen },
-        { name: 'Settings', href: '/settings', icon: Settings },
-      ]
-    }
-
-    return baseItems
-  }
+    // Sabhi routes bina role check ke show karenge
+    return [
+      { name: "Dashboard", href: "/", icon: BarChart3 },
+      { name: "AI Assistant", href: "/chat", icon: MessageCircle },
+      { name: "Appointments", href: "/appointments", icon: Calendar },
+      { name: "Mood Tracker", href: "/mood", icon: Activity },
+      { name: "Resources", href: "/resources", icon: BookOpen },
+      { name: "Peer Support", href: "/forum", icon: Heart },
+      { name: "Crisis Support", href: "/crisis", icon: AlertTriangle },
+      { name: "Profile", href: "/profile", icon: User },
+      { name: "Students", href: "/students", icon: User },
+      { name: "Analytics", href: "/analytics", icon: BarChart3 },
+      { name: "ML Insights", href: "/ml-insights", icon: Brain },
+      { name: "Users", href: "/users", icon: User },
+      { name: "Settings", href: "/settings", icon: Settings },
+    ];
+  };
 
   const handleLogout = async () => {
     try {
-      await signOut()
+      await signOut();
     } catch (error) {
-      console.error('Error signing out:', error)
+      console.error("Error signing out:", error);
     }
-  }
+  };
 
-  const navItems = getNavItems()
+  const navItems = getNavItems();
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Mobile sidebar */}
       {sidebarOpen && (
         <div className="fixed inset-0 z-40 lg:hidden">
-          <div className="fixed inset-0 bg-black bg-opacity-25" onClick={() => setSidebarOpen(false)} />
+          <div
+            className="fixed inset-0 bg-black bg-opacity-25"
+            onClick={() => setSidebarOpen(false)}
+          />
           <nav className="fixed top-0 left-0 bottom-0 w-64 bg-white shadow-xl">
             <div className="p-4 border-b">
               <div className="flex items-center justify-between">
@@ -100,8 +84,8 @@ export default function Layout({ children }: LayoutProps) {
                     to={item.href}
                     className={`flex items-center px-3 py-2 rounded-md transition-colors ${
                       location.pathname === item.href
-                        ? 'bg-teal-50 text-teal-600 font-medium'
-                        : 'text-gray-700 hover:bg-teal-50 hover:text-teal-600'
+                        ? "bg-teal-50 text-teal-600 font-medium"
+                        : "text-gray-700 hover:bg-teal-50 hover:text-teal-600"
                     }`}
                   >
                     <item.icon className="h-5 w-5 mr-3" />
@@ -137,8 +121,8 @@ export default function Layout({ children }: LayoutProps) {
                 to={item.href}
                 className={`flex items-center px-3 py-2 rounded-md transition-colors ${
                   location.pathname === item.href
-                    ? 'bg-teal-50 text-teal-600 font-medium'
-                    : 'text-gray-700 hover:bg-teal-50 hover:text-teal-600'
+                    ? "bg-teal-50 text-teal-600 font-medium"
+                    : "text-gray-700 hover:bg-teal-50 hover:text-teal-600"
                 }`}
               >
                 <item.icon className="h-5 w-5 mr-3" />
@@ -153,8 +137,12 @@ export default function Layout({ children }: LayoutProps) {
               <User className="h-4 w-4 text-teal-600" />
             </div>
             <div className="ml-3">
-              <p className="text-sm font-medium text-gray-900">{profile?.full_name}</p>
-              <p className="text-xs text-gray-500 capitalize">{profile?.role}</p>
+              <p className="text-sm font-medium text-gray-900">
+                {profile?.full_name || "Guest User"}
+              </p>
+              <p className="text-xs text-gray-500 capitalize">
+                {profile?.role || "No role"}
+              </p>
             </div>
           </div>
           <button
@@ -184,10 +172,8 @@ export default function Layout({ children }: LayoutProps) {
         </div>
 
         {/* Page content */}
-        <main className="p-6">
-          {children}
-        </main>
+        <main className="p-6">{children}</main>
       </div>
     </div>
-  )
+  );
 }

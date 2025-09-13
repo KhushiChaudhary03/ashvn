@@ -1,35 +1,35 @@
-import React, { useState } from 'react'
-import { useAuth } from '../contexts/AuthContext'
-import { Heart, Shield, Users } from 'lucide-react'
+import React, { useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
+import { Heart, Shield, Users } from "lucide-react";
 
 export default function Auth() {
-  const [isLogin, setIsLogin] = useState(true)
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [fullName, setFullName] = useState('')
-  const [role, setRole] = useState('student')
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
+  const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [role, setRole] = useState("student");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const { signIn, signUp } = useAuth()
+  const { signIn, signUp } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError('')
+    e.preventDefault();
+    setLoading(true);
+    setError("");
 
     try {
       if (isLogin) {
-        await signIn(email, password)
+        await signIn(email, password);
       } else {
-        await signUp(email, password, fullName, role)
+        await signUp(email, password, fullName, role);
       }
     } catch (error: any) {
-      setError(error.message)
+      setError(error.message);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-teal-50 to-blue-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -52,8 +52,8 @@ export default function Auth() {
                 onClick={() => setIsLogin(true)}
                 className={`flex-1 py-2 text-sm font-medium border-b-2 ${
                   isLogin
-                    ? 'border-teal-600 text-teal-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700'
+                    ? "border-teal-600 text-teal-600"
+                    : "border-transparent text-gray-500 hover:text-gray-700"
                 }`}
               >
                 Sign In
@@ -63,8 +63,8 @@ export default function Auth() {
                 onClick={() => setIsLogin(false)}
                 className={`flex-1 py-2 text-sm font-medium border-b-2 ${
                   !isLogin
-                    ? 'border-teal-600 text-teal-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700'
+                    ? "border-teal-600 text-teal-600"
+                    : "border-transparent text-gray-500 hover:text-gray-700"
                 }`}
               >
                 Sign Up
@@ -79,7 +79,10 @@ export default function Auth() {
 
             {!isLogin && (
               <div>
-                <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="fullName"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Full Name
                 </label>
                 <input
@@ -96,7 +99,10 @@ export default function Auth() {
             )}
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Email Address
               </label>
               <input
@@ -113,7 +119,10 @@ export default function Auth() {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Password
               </label>
               <input
@@ -131,7 +140,10 @@ export default function Auth() {
 
             {!isLogin && (
               <div>
-                <label htmlFor="role" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="role"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Role
                 </label>
                 <select
@@ -153,7 +165,7 @@ export default function Auth() {
               disabled={loading}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? 'Processing...' : isLogin ? 'Sign In' : 'Sign Up'}
+              {loading ? "Processing..." : isLogin ? "Sign In" : "Sign Up"}
             </button>
           </form>
 
@@ -174,5 +186,5 @@ export default function Auth() {
         </div>
       </div>
     </div>
-  )
+  );
 }
