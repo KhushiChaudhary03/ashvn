@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Settings as SettingsIcon, University, Users, Bell, Shield, Palette, Globe, Save } from 'lucide-react'
+import { Settings as SettingsIcon, Building2, Users, Bell, Shield, Palette, Globe, Save } from 'lucide-react'
 
 export default function Settings() {
   const [settings, setSettings] = useState({
@@ -42,7 +42,7 @@ export default function Settings() {
   }
 
   const tabs = [
-    { id: 'institution', name: 'Institution', icon: University },
+    { id: 'institution', name: 'Institution', icon: Building2 },
     { id: 'system', name: 'System', icon: SettingsIcon },
     { id: 'users', name: 'User Management', icon: Users },
     { id: 'notifications', name: 'Notifications', icon: Bell },
