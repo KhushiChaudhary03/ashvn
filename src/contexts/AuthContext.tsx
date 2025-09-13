@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { User } from "@supabase/supabase-js";
-import { supabase, Profile, UserRole } from "../lib/supabase";
+import { supabase, Profile } from "../lib/supabase";
 
 interface AuthContextType {
   user: User | null;
@@ -53,30 +53,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const { data, error } = await supabase
       .from("profiles")
       .select("*")
-      .eq("id", userId);
+      .eq("id", userId)
+      .single();
 
-    if (data && data.length > 0 && !error) {
-      setProfile(data[0]);
-    } else {
-      // Profile doesn't exist, try to create it
-      const { data: userData } = await supabase.auth.getUser();
-      const user = userData.user;
-      if (user) {
-        const role = (user.user_metadata?.role as UserRole) || "student";
-        const { data: insertData, error: insertError } = await supabase
-          .from("profiles")
-          .insert({
-            id: userId,
-            email: user.email!,
-            full_name: user.user_metadata?.full_name || "User",
-            role: role,
-          })
-          .select()
-          .single();
-        if (insertData && !insertError) {
-          setProfile(insertData);
-        }
-      }
+    if (data && !error) {
+      setProfile(data);
     }
   };
 
@@ -94,7 +75,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     fullName: string,
     role: string
   ) => {
-    const { data, error } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -104,11 +85,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         },
       },
     });
-    if (error) {
-      console.error("Signup error:", error);
-      throw new Error(`Signup failed: ${error.message}`);
-    }
-    console.log("Signup successful:", data);
+    if (error) throw error;
   };
 
   const signOut = async () => {
