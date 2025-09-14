@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ashvaan - Student Mental Health Support</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "rgb(13,148,136)", // custom Ashvaan teal
+            }
+          }
+        }
+      }
+    </script>
+  </head>
+  <body class="text-gray-800 flex flex-col min-h-screen bg-gradient-to-b from-primary/10 via-white to-gray-50">
+    
+    <!-- Hero Section with Floating Icons -->
+    <main class="relative flex flex-col items-center justify-between flex-1 px-6 py-16 overflow-hidden">
+      
+      <!-- Floating Background Icons -->
+      <div class="absolute top-10 left-10 text-6xl opacity-10">🧠</div>
+      <div class="absolute bottom-20 right-16 text-7xl opacity-10">❤️</div>
+      <div class="absolute top-40 right-1/3 text-5xl opacity-10">💬</div>
+      <div class="absolute bottom-10 left-1/4 text-6xl opacity-10">🤝</div>
+      
+  
+     
+
+<!-- Header / Title -->
+<div class="text-center mb-10 relative z-10">
+  <h1 class="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-primary via-teal-500 to-primary bg-clip-text text-transparent animate-gradient">
+    Welcome to Ashvaan 
+  </h1>
+  <p class="text-lg text-gray-700 mt-3 animate-slide-up">
+    A safe space for students to prioritize mental health and well-being 💬
+  </p>
+</div>
+
+<!-- Custom Animations -->
+<style>
+  /* Smooth gradient animation */
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradientShift 6s ease infinite;
+  }
+
+  /* Subtle slide-up animation */
+  @keyframes slideUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  .animate-slide-up {
+    animation: slideUp 2s ease-out forwards;
+  }
+</style>
+
+
+  
+      <!-- Content (Text + Image) -->
+      <div class="flex flex-col md:flex-row items-center justify-between w-full max-w-6xl relative z-10">
+        
+        <!-- Text Section -->
+<div class="max-w-xl text-center md:text-left">
+  
+ <!-- Tagline Section with Typing Effect -->
+<div class="flex items-center justify-center md:justify-start mt-6">
+  <h2 class="text-2xl md:text-3xl font-bold text-primary">
+    <span id="typing-text" class="typing-effect"></span>
+  </h2>
+</div>
+
+<!-- Gradient Animation CSS -->
+<style>
+  @keyframes gradientTagline {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .animate-gradient-tagline {
+    background: linear-gradient(90deg, #0DBD88, #7C3AED, #FF6B6B);
+    background-size: 200% 200%;
+    animation: gradientTagline 6s ease infinite;
+  }
+
+  /* Cursor remains same */
+  .cursor {
+    display: inline-block;
+    color: #0DB488; /* matches primary teal */
+    font-weight: bold;
+  }
+</style>
+<!-- Script for Typing Animation -->
+<script>
+  const texts = [
+    "Helping You Thrive, Not Just Survive ",
+    "You Are Not Alone ",
+    "Mental Health Matters ",
+    "Take a Break, Breathe, Restart "
+  ];
+
+  let textIndex = 0;
+  let charIndex = 0;
+  let currentText = "";
+  let isDeleting = false;
+  const typingSpeed = 100;  // typing speed (ms per char)
+  const erasingSpeed = 60;  // erasing speed
+  const delayBetween = 1500; // pause between texts
+
+  const typingElement = document.getElementById("typing-text");
+
+  function type() {
+    if (charIndex < texts[textIndex].length && !isDeleting) {
+      // typing forward
+      currentText += texts[textIndex][charIndex];
+      typingElement.textContent = currentText;
+      charIndex++;
+      setTimeout(type, typingSpeed);
+    } else if (isDeleting && charIndex > 0) {
+      // deleting backward
+      currentText = currentText.slice(0, -1);
+      typingElement.textContent = currentText;
+      charIndex--;
+      setTimeout(type, erasingSpeed);
+    } else {
+      // finished typing or erasing
+      if (!isDeleting) {
+        isDeleting = true;
+        setTimeout(type, delayBetween);
+      } else {
+        isDeleting = false;
+        textIndex = (textIndex + 1) % texts.length; // move to next text
+        setTimeout(type, typingSpeed);
+      }
+    }
+  }
+
+  type();
+</script>
+
+  <!-- Paragraph -->
+  <p class="text-lg text-gray-600 mb-6 mt-4">
+    College life can be exciting, but also overwhelming. Whether it’s exams, homesickness, or stress, you don’t have to face it alone.
+  </p>
+
+  <!-- Button -->
+  <a
+    href="dashboard.html"
+    class="px-6 py-3 bg-primary text-white rounded-lg hover:opacity-90 shadow-md"
+  >
+    Explore Dashboard
+  </a>
+</div>
+
+  
+        <!-- Image -->
+        <div class="mt-10 md:mt-0 flex justify-center md:justify-end">
+          <img
+            src="https://i.pinimg.com/1200x/3b/06/c2/3b06c29e50f5369f87c4c958ee71c3ff.jpg"
+            alt="Student Mental Health"
+            class="w-80 h-80 object-cover rounded-full shadow-xl hover:scale-105 transition-transform duration-300 border-4 border-primary"
+          />
+        </div>
+      </div>
+    </main>
+  
+    <!-- Quotes Section with Icons -->
+    <section class="mt-16 w-full max-w-5xl mx-auto">
+      <h3 class="text-2xl font-bold text-center mb-6 text-primary">
+        Supportive Words for Students ✨
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white shadow-md rounded-lg p-6 text-center">
+          <img src="https://cdn-icons-png.flaticon.com/512/3448/3448440.png" class="w-12 mx-auto mb-3" />
+          <p class="text-gray-700 italic">
+            "It's okay to not have it all figured out. College is a journey, not a race."
+          </p>
+        </div>
+        <div class="bg-white shadow-md rounded-lg p-6 text-center">
+          <img src="https://cdn-icons-png.flaticon.com/512/4149/4149670.png" class="w-12 mx-auto mb-3" />
+          <p class="text-gray-700 italic">
+            "Asking for help is a sign of strength, not weakness."
+          </p>
+        </div>
+        <div class="bg-white shadow-md rounded-lg p-6 text-center">
+          <img src="https://cdn-icons-png.flaticon.com/512/3408/3408543.png" class="w-12 mx-auto mb-3" />
+          <p class="text-gray-700 italic">
+            "Exams are important, but so is your well-being."
+          </p>
+        </div>
+        <div class="bg-white shadow-md rounded-lg p-6 text-center">
+          <img src="https://cdn-icons-png.flaticon.com/512/2762/2762410.png" class="w-12 mx-auto mb-3" />
+          <p class="text-gray-700 italic">
+            "Take breaks, breathe, and remember—you are not alone."
+          </p>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Features Section with Icons -->
+    <section class="mt-16 max-w-5xl text-center mx-auto">
+      <h3 class="text-2xl font-bold mb-6 text-primary">How Ashvaan Helps Students 💡</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-primary/10 p-6 rounded-lg shadow">
+          <img src="https://cdn-icons-png.flaticon.com/512/4712/4712100.png" class="w-14 mx-auto mb-3" />
+          <h4 class="font-semibold text-lg mb-2 text-primary">🤖 AI Assistant</h4>
+          <p class="text-gray-600 text-sm">
+            Chat with an AI assistant trained to provide psychological guidance.
+          </p>
+        </div>
+        <div class="bg-primary/10 p-6 rounded-lg shadow">
+          <img src="https://cdn-icons-png.flaticon.com/512/456/456212.png" class="w-14 mx-auto mb-3" />
+          <h4 class="font-semibold text-lg mb-2 text-primary">🤝 Peer Support</h4>
+          <p class="text-gray-600 text-sm">
+            Connect with other students who understand your struggles.
+          </p>
+        </div>
+        <div class="bg-primary/10 p-6 rounded-lg shadow">
+          <img src="https://cdn-icons-png.flaticon.com/512/562/562678.png" class="w-14 mx-auto mb-3" />
+          <h4 class="font-semibold text-lg mb-2 text-primary">🚨 Crisis Support</h4>
+          <p class="text-gray-600 text-sm">
+            Get quick access to professional help when you need it most.
+          </p>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Illustration at Bottom -->
+    <div class="mt-16 mb-6">
+      <img
+        src="https://i.pinimg.com/736x/d5/8a/40/d58a40beb662a26002434b4c1fcbe600.jpg"
+        alt="Mental Health Illustration"
+        class="w-72 md:w-96 mx-auto rounded-lg shadow-lg"
+      />
+    </div>
+  
+  </body>
+</html>
